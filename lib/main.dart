@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/screens.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,17 +11,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Chatter',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body:const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      home: HomeScreen(),
     );
   }
 }
