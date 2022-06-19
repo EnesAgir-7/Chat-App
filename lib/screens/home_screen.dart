@@ -1,8 +1,10 @@
+import 'package:chat_app/helpers.dart';
 import 'package:chat_app/pages/calls_page.dart';
 import 'package:chat_app/pages/contacts_page.dart';
 import 'package:chat_app/pages/messages_page.dart';
 import 'package:chat_app/pages/notifications.dart';
 import 'package:chat_app/theme.dart';
+import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class HomeScreen extends StatelessWidget {
 
   final pages = const [MessagesPage(), NotificationPage(), CallsPage(), ContactsPage()];
 
-  final pageTitles = const ['Messages','Notifications','Calls','Contacts'];
+  final pageTitles = const ['Messages', 'Notifications', 'Calls', 'Contacts'];
 
   void _onNavigationItemSelected(index) {
     //! need to call set state
@@ -30,18 +32,33 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: ValueListenableBuilder(
-          valueListenable: title,
-          builder: (BuildContext context, String value, _) {
-            return Text(
-              value,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            );
-          },
+        title: Center(
+          child: ValueListenableBuilder(
+            valueListenable: title,
+            builder: (BuildContext context, String value, _) {
+              return Text(
+                value,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              );
+            },
+          ),
         ),
+        leading: Center(
+          child: IconBackground(
+              icon: Icons.search,
+              onTap: () {
+                print('ToDo Search');
+              }),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 24),
+            child: Avatar.small(url: Helpers.randomPictureUrl()),
+          )
+        ],
       ),
       body: ValueListenableBuilder(
         valueListenable: pageIndex,
