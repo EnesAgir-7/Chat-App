@@ -46,7 +46,10 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ),
-        leading: Center(
+        //^leadingWidth little moved left side
+        leadingWidth: 54,
+        leading: Align(
+          alignment: Alignment.centerRight,
           child: IconBackground(
               icon: Icons.search,
               onTap: () {
