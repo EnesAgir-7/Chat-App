@@ -22,6 +22,7 @@ class GlowingActionButton extends StatelessWidget {
         color: color,
         shape: BoxShape.circle,
         boxShadow: [
+          //^ mavi rengi buttonun disatisina tasirmak icin kullandim
           BoxShadow(
             color: color.withOpacity(0.3),
             spreadRadius: 10,
@@ -32,6 +33,7 @@ class GlowingActionButton extends StatelessWidget {
       child: ClipOval(
         child: Material(
           color: color,
+          //^ for effect 
           child: InkWell(
             splashColor: AppColors.cardLight,
             onTap: onPressed,
