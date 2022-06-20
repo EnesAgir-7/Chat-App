@@ -1,6 +1,7 @@
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 
 import '../helpers.dart';
 import '../models/models.dart';
@@ -11,10 +12,64 @@ class MessagesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: _Stories(),
+    return CustomScrollView(
+      //^ slivers => (horizontal && vertically) sometime, custom scroll bar
+      slivers: [
+        SliverToBoxAdapter(child: _Stories()),
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          _delegate,
+        )),
+      ],
     );
+  }
+
+  Widget _delegate(BuildContext context, index) {
+    final Faker faker = Faker();
+    final date = Helpers.randomDate();
+
+    return _MessageTitle(
+        messageData: MessageData(
+      senderName: faker.person.name(),
+      message: faker.lorem.sentence(),
+      messageDate: date,
+      //^ Jiffy -> quick way for you to create messages from dates 
+      dateMessage: Jiffy(date).fromNow(),
+      profilePicture: Helpers.randomPictureUrl(),
+    ));
+  }
+}
+
+class _MessageTitle extends StatelessWidget {
+  const _MessageTitle({Key? key, required this.messageData}) : super(key: key);
+
+  final MessageData messageData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Avatar.medium(url: messageData.profilePicture),
+          ),
+          Expanded(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                //^ symmetric bottom-top && left-right 
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(messageData.senderName,overflow: TextOverflow.ellipsis, style: const TextStyle(
+                  letterSpacing: 0.2,
+                  wordSpacing: 1.5,
+                  fontWeight: FontWeight.w900,
+                ),),
+              ),
+              SizedBox(height: 20, child: Text(messageData.message,overflow: TextOverflow.ellipsis,style: const TextStyle(fontSize: 12,color: AppColors.textFaded),)),
+          ],)),
+          
+        ],
+        );
   }
 }
 
@@ -32,7 +87,7 @@ class _Stories extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
-              padding: EdgeInsets.only(left: 16,bottom: 16,top: 8),
+              padding: EdgeInsets.only(left: 16, bottom: 16, top: 8),
               child: Text(
                 'Stories',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900, color: AppColors.textFaded),
@@ -46,7 +101,7 @@ class _Stories extends StatelessWidget {
                     final faker = Faker();
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(width: 60, child: _StoryCard(storyData: StoryData(name: faker.person.name(),url:Helpers.randomPictureUrl()))),
+                      child: SizedBox(width: 60, child: _StoryCard(storyData: StoryData(name: faker.person.name(), url: Helpers.randomPictureUrl()))),
                     );
                   }),
             )

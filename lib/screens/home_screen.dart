@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
     // pageIndex.addListener(() => { print(pageIndex.value)},);
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Center(
