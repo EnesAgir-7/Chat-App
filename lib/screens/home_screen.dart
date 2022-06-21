@@ -127,6 +127,10 @@ class _bottomNavigationBarState extends State<_bottomNavigationBar> {
                 isSelected: (selectedIndex == 1),
                 onTap: handleItemSelected,
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: GlowingActionButton(color: AppColors.secondary, icon: CupertinoIcons.add, onPressed: (){}),
+              ),
               _NavigationBarItem(
                 index: 2,
                 label: 'Calls',
@@ -167,7 +171,7 @@ class _NavigationBarItem extends StatelessWidget {
       },
       //^ SizedBox for specific height
       child: SizedBox(
-        height: 70,
+        width: 70,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
